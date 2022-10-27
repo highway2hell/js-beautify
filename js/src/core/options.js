@@ -159,6 +159,10 @@ Options.prototype._is_valid_selection = function(result, selection_list) {
 //          Returns: {a: 2}
 function _mergeOpts(allOptions, childFieldName) {
   var finalOpts = {};
+
+  //Prevent Protoype Pollution
+  Object.freeze(Object.getPrototypeOf(finalOpts));
+
   allOptions = _normalizeOpts(allOptions);
   var name;
 
@@ -174,6 +178,10 @@ function _mergeOpts(allOptions, childFieldName) {
       finalOpts[name] = allOptions[childFieldName][name];
     }
   }
+
+  //Unfreeze finalOpts because it need to be extended in initial case
+  Object.unfreeze(Object.getPrototypeOf(finalOpts));
+
   return finalOpts;
 }
 
