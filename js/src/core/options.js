@@ -161,8 +161,10 @@ function _mergeOpts(allOptions, childFieldName) {
   var finalOpts = {};
 
   //Prevent Protoype Pollution
-  Object.freeze(Object.getPrototypeOf(finalOpts));
-
+  if(childFieldName){
+    Object.freeze(Object.getPrototypeOf(finalOpts));
+  }
+  
   allOptions = _normalizeOpts(allOptions);
   var name;
 
@@ -178,9 +180,6 @@ function _mergeOpts(allOptions, childFieldName) {
       finalOpts[name] = allOptions[childFieldName][name];
     }
   }
-
-  //Unfreeze finalOpts because it need to be extended in initial case
-  Object.unfreeze(Object.getPrototypeOf(finalOpts));
 
   return finalOpts;
 }
